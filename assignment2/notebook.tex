@@ -1,0 +1,983 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{mlp\_v1}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} \PYZpc{}\PYZpc{} 1}
+        \PY{c+c1}{\PYZsh{} Package imports}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{sklearn}
+        \PY{k+kn}{import} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{datasets}
+        \PY{k+kn}{import} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{datasets} \PY{k}{import} \PY{n}{fetch\PYZus{}20newsgroups}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{feature\PYZus{}extraction}\PY{n+nn}{.}\PY{n+nn}{text} \PY{k}{import} \PY{n}{TfidfVectorizer}
+        \PY{k+kn}{from} \PY{n+nn}{pprint} \PY{k}{import} \PY{n}{pprint}
+        \PY{k+kn}{import} \PY{n+nn}{copy}
+        
+        \PY{n}{categories} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alt.atheism}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{talk.religion.misc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{comp.graphics}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sci.space}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        
+        \PY{n}{newsgroups\PYZus{}train} \PY{o}{=} \PY{n}{fetch\PYZus{}20newsgroups}\PY{p}{(}\PY{n}{subset}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{train}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}  \PY{n}{categories}\PY{o}{=}\PY{n}{categories}\PY{p}{)}
+        \PY{n}{newsgroups\PYZus{}test} \PY{o}{=} \PY{n}{fetch\PYZus{}20newsgroups}\PY{p}{(}\PY{n}{subset}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}  \PY{n}{categories}\PY{o}{=}\PY{n}{categories}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} pprint(newsgroups\PYZus{}train.data[0])}
+        
+        \PY{n}{num\PYZus{}train} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{newsgroups\PYZus{}train}\PY{o}{.}\PY{n}{data}\PY{p}{)}
+        \PY{n}{num\PYZus{}test}  \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{newsgroups\PYZus{}test}\PY{o}{.}\PY{n}{data}\PY{p}{)}
+        
+        \PY{n}{vectorizer} \PY{o}{=} \PY{n}{TfidfVectorizer}\PY{p}{(}\PY{n}{max\PYZus{}features}\PY{o}{=}\PY{l+m+mi}{256}\PY{p}{)}
+        
+        \PY{n}{X} \PY{o}{=} \PY{n}{vectorizer}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(} \PY{n}{newsgroups\PYZus{}train}\PY{o}{.}\PY{n}{data} \PY{o}{+} \PY{n}{newsgroups\PYZus{}test}\PY{o}{.}\PY{n}{data} \PY{p}{)}
+        \PY{n}{X\PYZus{}train} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{n}{num\PYZus{}train}\PY{p}{,} \PY{p}{:}\PY{p}{]}
+        \PY{n}{X\PYZus{}test} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{n}{num\PYZus{}train}\PY{p}{:}\PY{n}{num\PYZus{}train}\PY{o}{+}\PY{n}{num\PYZus{}test}\PY{p}{,}\PY{p}{:}\PY{p}{]}
+        
+        \PY{n}{Y\PYZus{}train} \PY{o}{=} \PY{n}{newsgroups\PYZus{}train}\PY{o}{.}\PY{n}{target}
+        \PY{n}{Y\PYZus{}test} \PY{o}{=} \PY{n}{newsgroups\PYZus{}test}\PY{o}{.}\PY{n}{target}
+        
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{n}{Y\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{n}{Y\PYZus{}test}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(2034, 256) (2034,)
+(1353, 256) (1353,)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} \PYZsh{} Generate a dataset and plot it}
+        \PY{c+c1}{\PYZsh{} np.random.seed(0)}
+        \PY{c+c1}{\PYZsh{} X, y = sklearn.datasets.make\PYZus{}moons(1000, noise=0.20)}
+        \PY{c+c1}{\PYZsh{} print(\PYZsq{}输入：\PYZsq{},X.shape)}
+        \PY{c+c1}{\PYZsh{} print(\PYZsq{}输出\PYZsq{},y.shape)}
+        \PY{c+c1}{\PYZsh{} plt.scatter(X[:,0], X[:,1], s=40, c=y, cmap=plt.cm.Spectral)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} \PYZsh{} Train the logistic regression classifier}
+        \PY{c+c1}{\PYZsh{} clf = sklearn.linear\PYZus{}model.LogisticRegressionCV()}
+        \PY{c+c1}{\PYZsh{} clf.fit(X, y)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{} \PYZsh{} Helper function to plot a decision boundary.}
+        \PY{c+c1}{\PYZsh{} \PYZsh{} If you don\PYZsq{}t fully understand this function don\PYZsq{}t worry, it just generates the contour plot below.}
+        \PY{c+c1}{\PYZsh{} def plot\PYZus{}decision\PYZus{}boundary(pred\PYZus{}func):}
+        \PY{c+c1}{\PYZsh{}     \PYZsh{} Set min and max values and give it some padding}
+        \PY{c+c1}{\PYZsh{}     x\PYZus{}min, x\PYZus{}max = X[:, 0].min() \PYZhy{} .5, X[:, 0].max() + .5}
+        \PY{c+c1}{\PYZsh{}     y\PYZus{}min, y\PYZus{}max = X[:, 1].min() \PYZhy{} .5, X[:, 1].max() + .5}
+        \PY{c+c1}{\PYZsh{}     h = 0.01}
+        \PY{c+c1}{\PYZsh{}     \PYZsh{} Generate a grid of points with distance h between them}
+        \PY{c+c1}{\PYZsh{}     xx, yy = np.meshgrid(np.arange(x\PYZus{}min, x\PYZus{}max, h), np.arange(y\PYZus{}min, y\PYZus{}max, h))}
+        \PY{c+c1}{\PYZsh{}     \PYZsh{} Predict the function value for the whole gid}
+        \PY{c+c1}{\PYZsh{}     Z = pred\PYZus{}func(np.c\PYZus{}[xx.ravel(), yy.ravel()])}
+        \PY{c+c1}{\PYZsh{}     Z = Z.reshape(xx.shape)}
+        \PY{c+c1}{\PYZsh{}     \PYZsh{} Plot the contour and training examples}
+        \PY{c+c1}{\PYZsh{}     plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)}
+        \PY{c+c1}{\PYZsh{}     plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.Spectral)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{} \PYZsh{} Plot the decision boundary}
+        \PY{c+c1}{\PYZsh{} plot\PYZus{}decision\PYZus{}boundary(lambda x: clf.predict(x))}
+        \PY{c+c1}{\PYZsh{} plt.title(\PYZdq{}Logistic Regression\PYZdq{})}
+\end{Verbatim}
+
+
+    \subsubsection{drop out}\label{drop-out}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{def} \PY{n+nf}{dropout}\PY{p}{(}\PY{n}{layer\PYZus{}idx}\PY{p}{,}\PY{n}{layers}\PY{p}{,} \PY{n}{col\PYZus{}size}\PY{p}{)}\PY{p}{:}
+            \PY{n}{W} \PY{o}{=} \PY{n}{layers}\PY{p}{[}\PY{n}{layer\PYZus{}idx}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{n}{random\PYZus{}idx} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n}{low} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{,} \PY{n}{high}\PY{o}{=}\PY{n}{W}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{n}{col\PYZus{}size}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{l}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{random\PYZus{}idx: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{random\PYZus{}idx}\PY{p}{)}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{random\PYZus{}idx}\PY{p}{:}
+                \PY{n}{W}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{n}{layers}\PY{p}{[}\PY{n}{layer\PYZus{}idx}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{W}
+            \PY{k}{return} \PY{n}{layers}
+\end{Verbatim}
+
+
+    初始化层
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{def} \PY{n+nf}{init\PYZus{}layer}\PY{p}{(}\PY{n}{input\PYZus{}dim}\PY{p}{,} \PY{n}{output\PYZus{}dim}\PY{p}{,} \PY{n}{actFunc}\PY{p}{)}\PY{p}{:}
+            \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+            \PY{n}{W} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randn}\PY{p}{(}\PY{n}{input\PYZus{}dim}\PY{p}{,} \PY{n}{output\PYZus{}dim}\PY{p}{)} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{input\PYZus{}dim}\PY{p}{)}
+            \PY{n}{b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{output\PYZus{}dim}\PY{p}{)}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{W}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{b}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+            \PY{n}{layer} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{W}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{b}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{actFunc}\PY{p}{\PYZcb{}}
+            \PY{k}{return} \PY{n}{layer}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{init\PYZus{}layers}\PY{p}{(}\PY{n}{nn\PYZus{}architecture}\PY{p}{)}\PY{p}{:}
+            \PY{n}{layers} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n}{nn\PYZus{}architecture}\PY{p}{:}
+                \PY{n}{layer} \PY{o}{=} \PY{n}{init\PYZus{}layer}\PY{p}{(}\PY{n}{l}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{l}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{l}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+                \PY{n}{layers}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{layer}\PY{p}{)}
+            \PY{k}{return} \PY{n}{layers}
+\end{Verbatim}
+
+
+    激活函数
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{sigmoid}\PY{p}{(}\PY{n}{z}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{l+m+mi}{1} \PY{o}{/} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{z}\PY{p}{)}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{relu}\PY{p}{(}\PY{n}{z}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{maximum}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{z}\PY{p}{)}
+\end{Verbatim}
+
+
+    softmax
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{def} \PY{n+nf}{softmax}\PY{p}{(}\PY{n}{Z}\PY{p}{)}\PY{p}{:}
+             \PY{n}{exp\PYZus{}scores} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{n}{Z}\PY{p}{)}
+             \PY{n}{probs} \PY{o}{=} \PY{n}{exp\PYZus{}scores} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{exp\PYZus{}scores}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{keepdims}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+             \PY{k}{return} \PY{n}{probs}
+\end{Verbatim}
+
+
+    反向传播
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{sigmoid\PYZus{}backward}\PY{p}{(}\PY{n}{dA}\PY{p}{,} \PY{n}{Z}\PY{p}{)}\PY{p}{:}
+             \PY{n}{sig} \PY{o}{=} \PY{n}{sigmoid}\PY{p}{(}\PY{n}{Z}\PY{p}{)}
+             \PY{k}{return} \PY{n}{dA} \PY{o}{*} \PY{n}{sig} \PY{o}{*} \PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{sig}\PY{p}{)}
+         
+         \PY{k}{def} \PY{n+nf}{relu\PYZus{}backward}\PY{p}{(}\PY{n}{dA}\PY{p}{,} \PY{n}{Z}\PY{p}{)}\PY{p}{:}
+             \PY{n}{dZ} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{dA}\PY{p}{,} \PY{n}{copy} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+             \PY{n}{dZ}\PY{p}{[}\PY{n}{Z} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{k}{return} \PY{n}{dZ}
+         
+         \PY{k}{def} \PY{n+nf}{tanh\PYZus{}backward}\PY{p}{(}\PY{n}{dA}\PY{p}{,} \PY{n}{Z}\PY{p}{)}\PY{p}{:}
+             \PY{n}{t} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{tanh}\PY{p}{(}\PY{n}{Z}\PY{p}{)}
+             \PY{n}{res} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{t} \PY{o}{*} \PY{n}{t}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}res:\PYZsq{}, res.shape)}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}dA:\PYZsq{}, dA.shape)}
+             \PY{k}{return} \PY{n}{res} \PY{o}{*} \PY{n}{dA}
+\end{Verbatim}
+
+
+    损失函数
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k}{def} \PY{n+nf}{loss}\PY{p}{(}\PY{n}{Z}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} 计算损失}
+             \PY{n}{probs} \PY{o}{=} \PY{n}{softmax}\PY{p}{(}\PY{n}{Z}\PY{p}{)}
+             \PY{n}{corect\PYZus{}logprobs} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{probs}\PY{p}{[}\PY{n+nb}{range}\PY{p}{(}\PY{n}{num\PYZus{}examples}\PY{p}{)}\PY{p}{,} \PY{n}{y}\PY{p}{]}\PY{p}{)}
+             \PY{n}{data\PYZus{}loss} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{corect\PYZus{}logprobs}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{}在损失上加上正则项（可选）}
+             \PY{c+c1}{\PYZsh{} data\PYZus{}loss += reg\PYZus{}lambda/2 * (np.sum(np.square(W1)) + np.sum(np.square(W2)))}
+             \PY{k}{return} \PY{l+m+mf}{1.}\PY{o}{/}\PY{n}{num\PYZus{}examples} \PY{o}{*} \PY{n}{data\PYZus{}loss}
+\end{Verbatim}
+
+
+    前向传播
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k}{def} \PY{n+nf}{single\PYZus{}layer\PYZus{}forward\PYZus{}prop}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{layer}\PY{p}{)}\PY{p}{:}
+             \PY{n}{W} \PY{o}{=} \PY{n}{layer}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{c+c1}{\PYZsh{}     print(W.shape)}
+             \PY{n}{Z} \PY{o}{=} \PY{n}{X}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{layer}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{n}{layer}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{k}{if} \PY{n}{layer}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o+ow}{is} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{n}{actFunction} \PY{o}{=} \PY{n}{relu}
+             \PY{k}{elif} \PY{n}{layer}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o+ow}{is} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{n}{actFunction} \PY{o}{=} \PY{n}{sigmoid}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{actFunction} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{tanh}
+             \PY{k}{return} \PY{n}{actFunction}\PY{p}{(}\PY{n}{Z}\PY{p}{)}\PY{p}{,} \PY{n}{Z}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{k}{def} \PY{n+nf}{full\PYZus{}layers\PYZus{}forward\PYZus{}prop}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{layers}\PY{p}{)}\PY{p}{:}
+             \PY{n}{memory\PYZus{}forward} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{Z\PYZus{}out} \PY{o}{=} \PY{n}{X}
+             \PY{n}{memo\PYZus{}forward} \PY{o}{=} \PY{p}{\PYZob{}}
+                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Z\PYZus{}out}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{X}
+             \PY{p}{\PYZcb{}}
+             \PY{n}{memory\PYZus{}forward}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{memo\PYZus{}forward}\PY{p}{)}
+             \PY{n}{layers\PYZus{}now} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{k}{for} \PY{n}{layer} \PY{o+ow}{in} \PY{n}{layers}\PY{p}{:}
+         \PY{c+c1}{\PYZsh{}         print(\PYZsq{}forward layers\PYZus{}now:\PYZsq{},layers\PYZus{}now)}
+                 \PY{n}{Z\PYZus{}out}\PY{p}{,} \PY{n}{Z\PYZus{}hide} \PY{o}{=} \PY{n}{single\PYZus{}layer\PYZus{}forward\PYZus{}prop}\PY{p}{(}\PY{n}{Z\PYZus{}out}\PY{p}{,} \PY{n}{layer}\PY{p}{)}
+                 \PY{n}{memo\PYZus{}forward} \PY{o}{=} \PY{p}{\PYZob{}}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Z\PYZus{}out}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{Z\PYZus{}out}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Z\PYZus{}hide}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{Z\PYZus{}hide}
+                 \PY{p}{\PYZcb{}}
+                 \PY{n}{memory\PYZus{}forward}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{memo\PYZus{}forward}\PY{p}{)}
+                 \PY{n}{layers\PYZus{}now} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+         
+             \PY{c+c1}{\PYZsh{} 返回最终的Z\PYZus{}out =\PYZgt{} actFunc(Z=X*W + b)}
+             \PY{c+c1}{\PYZsh{} memory\PYZus{}forward记录每一层的Z\PYZus{}out=actFunc(Z\PYZus{}hide)和Z\PYZus{}hide=W*X+b}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}Z\PYZus{}out: \PYZsq{},Z\PYZus{}out.shape)}
+             \PY{k}{return} \PY{n}{Z\PYZus{}out}\PY{p}{,} \PY{n}{memory\PYZus{}forward}
+\end{Verbatim}
+
+
+    反向传播
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k}{def} \PY{n+nf}{single\PYZus{}layer\PYZus{}backward\PYZus{}prop}\PY{p}{(}\PY{n}{memo\PYZus{}forward\PYZus{}now}\PY{p}{,} \PY{n}{memo\PYZus{}forward\PYZus{}pre}\PY{p}{,} \PY{n}{dA\PYZus{}now}\PY{p}{,} \PY{n}{layer}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} 前向神经元个数}
+             \PY{c+c1}{\PYZsh{} dA\PYZus{}now为由下一层传回的梯度}
+             \PY{c+c1}{\PYZsh{} memo\PYZus{}forward\PYZus{}pre 记录上一层计算结果， Z\PYZus{}hide=X*w+b和Z\PYZus{}out =\PYZgt{} X\PYZus{}pre}
+             \PY{c+c1}{\PYZsh{} memo\PYZus{}forward\PYZus{}now 记录当前层的计算结果，Z\PYZus{}hide =\PYZgt{} Z\PYZus{}now和Z\PYZus{}out}
+             \PY{n}{X\PYZus{}pre} \PY{o}{=} \PY{n}{memo\PYZus{}forward\PYZus{}pre}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Z\PYZus{}out}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{Z\PYZus{}now} \PY{o}{=} \PY{n}{memo\PYZus{}forward\PYZus{}now}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Z\PYZus{}hide}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{back\PYZus{}dim} \PY{o}{=} \PY{n}{X\PYZus{}pre}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+         
+             \PY{k}{if} \PY{n}{layer}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o+ow}{is} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{n}{actFuncBack} \PY{o}{=} \PY{n}{sigmoid\PYZus{}backward}
+             \PY{k}{elif} \PY{n}{layer}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o+ow}{is} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                 \PY{n}{actFuncBack} \PY{o}{=} \PY{n}{relu\PYZus{}backward}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{actFuncBack} \PY{o}{=} \PY{n}{tanh\PYZus{}backward}
+         
+             \PY{c+c1}{\PYZsh{} 计算当前层外层导数}
+             \PY{c+c1}{\PYZsh{} dZ\PYZus{}now = actFunc\PYZsq{}(Z\PYZus{}hide)}
+             \PY{n}{dZ\PYZus{}now} \PY{o}{=} \PY{n}{actFuncBack}\PY{p}{(}\PY{n}{dA\PYZus{}now}\PY{p}{,} \PY{n}{Z\PYZus{}now}\PY{p}{)}
+             \PY{c+c1}{\PYZsh{} dW\PYZus{}now = actFunc\PYZsq{}(Z\PYZus{}hide) * (X=Z\PYZus{}hide*dW)}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}X\PYZus{}pre\PYZsq{},X\PYZus{}pre.shape)}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}dZ\PYZus{}now\PYZsq{},dZ\PYZus{}now.shape)}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}dA\PYZus{}now\PYZsq{},dA\PYZus{}now.shape)}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}Z\PYZus{}now\PYZsq{},Z\PYZus{}now.shape)}
+             \PY{n}{dW\PYZus{}now} \PY{o}{=} \PY{n}{X\PYZus{}pre}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{dZ\PYZus{}now}\PY{p}{)} \PY{o}{/} \PY{n}{back\PYZus{}dim}
+             \PY{c+c1}{\PYZsh{} db\PYZus{}now = actFunc\PYZsq{}(Z\PYZus{}hide) * (1=Z\PYZus{}hide*db); 维度转换}
+             \PY{n}{db\PYZus{}now} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{dZ\PYZus{}now}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{keepdims}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)} \PY{o}{/} \PY{n}{back\PYZus{}dim}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}dW\PYZus{}now:\PYZsq{},dW\PYZus{}now.shape)}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}db\PYZus{}now\PYZsq{},db\PYZus{}now.shape)}
+             \PY{c+c1}{\PYZsh{} dA\PYZus{}pre为向前一层传递的梯度；对上一层的Z\PYZus{}out即本层的X求导结果}
+             \PY{c+c1}{\PYZsh{} dA\PYZus{}pre = actFunc\PYZsq{}(Z\PYZus{}hide) * (W=Z\PYZus{}hide*dX)}
+             \PY{n}{W\PYZus{}now} \PY{o}{=} \PY{n}{copy}\PY{o}{.}\PY{n}{deepcopy}\PY{p}{(}\PY{n}{layer}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             \PY{n}{dA\PYZus{}pre} \PY{o}{=} \PY{n}{dZ\PYZus{}now}\PY{o}{.}\PY{n}{dot}\PY{p}{(}\PY{n}{W\PYZus{}now}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}dA\PYZus{}pre\PYZsq{},dA\PYZus{}pre.shape)}
+             
+             \PY{k}{return} \PY{n}{dA\PYZus{}pre}\PY{p}{,}\PY{n}{dW\PYZus{}now}\PY{p}{,} \PY{n}{db\PYZus{}now}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{k}{def} \PY{n+nf}{full\PYZus{}layers\PYZus{}backward\PYZus{}prop}\PY{p}{(}\PY{n}{Z\PYZus{}out}\PY{p}{,} \PY{n}{memory\PYZus{}forward}\PY{p}{,} \PY{n}{layers}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{:}
+         \PY{c+c1}{\PYZsh{}     Z\PYZus{}out, memo\PYZus{}forward = full\PYZus{}layers\PYZus{}forward\PYZus{}prop(X, layers)}
+             \PY{c+c1}{\PYZsh{} 反向传播}
+             \PY{n}{probs} \PY{o}{=} \PY{n}{softmax}\PY{p}{(}\PY{n}{Z\PYZus{}out}\PY{p}{)}
+             \PY{n}{probs}\PY{p}{[}\PY{n+nb}{range}\PY{p}{(}\PY{n}{num\PYZus{}examples}\PY{p}{)}\PY{p}{,} \PY{n}{y}\PY{p}{]} \PY{o}{\PYZhy{}}\PY{o}{=} \PY{l+m+mi}{1}
+             \PY{n}{dA\PYZus{}pre} \PY{o}{=} \PY{n}{probs}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}dA\PYZus{}now:\PYZsq{}, dA\PYZus{}now.shape)}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}probs:\PYZsq{}, probs.shape)}
+             \PY{n}{memory\PYZus{}backward} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{layers}\PY{o}{.}\PY{n}{reverse}\PY{p}{(}\PY{p}{)}
+             \PY{n}{memory\PYZus{}forward}\PY{o}{.}\PY{n}{reverse}\PY{p}{(}\PY{p}{)}
+         
+             \PY{n}{length} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{layers}\PY{p}{)}
+             \PY{k}{for} \PY{n}{idx} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{length}\PY{p}{)}\PY{p}{:}
+         \PY{c+c1}{\PYZsh{}         print(\PYZsq{}layer\PYZus{}now:\PYZsq{}, idx)}
+                 \PY{n}{dA\PYZus{}pre}\PY{p}{,} \PY{n}{dW\PYZus{}now}\PY{p}{,} \PY{n}{db\PYZus{}now} \PY{o}{=} \PY{n}{single\PYZus{}layer\PYZus{}backward\PYZus{}prop}\PY{p}{(}\PY{n}{memory\PYZus{}forward}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{,}\PY{n}{memory\PYZus{}forward}\PY{p}{[}\PY{n}{idx}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}\PY{n}{dA\PYZus{}pre}\PY{p}{,}\PY{n}{layers}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{)}
+                 \PY{n}{memo\PYZus{}backward} \PY{o}{=} \PY{p}{\PYZob{}}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dW\PYZus{}now}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{dW\PYZus{}now}\PY{p}{,}
+                     \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{db\PYZus{}now}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{db\PYZus{}now}
+                 \PY{p}{\PYZcb{}}
+                 \PY{n}{memory\PYZus{}backward}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{memo\PYZus{}backward}\PY{p}{)}
+         
+             \PY{k}{return} \PY{n}{memory\PYZus{}backward}
+\end{Verbatim}
+
+
+    更新网络
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{k}{def} \PY{n+nf}{update}\PY{p}{(}\PY{n}{layers}\PY{p}{,} \PY{n}{memory\PYZus{}backward}\PY{p}{)}\PY{p}{:}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}layers: \PYZsq{},len(layers)}
+         \PY{c+c1}{\PYZsh{}     print(\PYZsq{}memory\PYZus{}backward: \PYZsq{}, len(memory\PYZus{}backward))}
+             \PY{n}{length} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{layers}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}     print(memory\PYZus{}backward)}
+         \PY{c+c1}{\PYZsh{}     print(layers)}
+         \PY{c+c1}{\PYZsh{}     print(memory\PYZus{}backward)}
+             \PY{k}{for} \PY{n}{idx} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{length}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{dW} \PY{o}{=} \PY{n}{memory\PYZus{}backward}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dW\PYZus{}now}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{c+c1}{\PYZsh{}         print(\PYZsq{}dW.shape: \PYZsq{}, dW.shape)}
+                 \PY{n}{layers}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{W}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZhy{}}\PY{o}{=} \PY{n}{epsilon} \PY{o}{*} \PY{n}{memory\PYZus{}backward}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dW\PYZus{}now}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 \PY{n}{layers}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZhy{}}\PY{o}{=} \PY{n}{epsilon} \PY{o}{*} \PY{n}{memory\PYZus{}backward}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{db\PYZus{}now}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                 
+         \PY{c+c1}{\PYZsh{}     print(memory\PYZus{}backward)}
+         \PY{c+c1}{\PYZsh{}     print(layers)}
+             \PY{k}{return} \PY{n}{layers}
+\end{Verbatim}
+
+
+    预测函数
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{k}{def} \PY{n+nf}{predict}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{layers}\PY{p}{)}\PY{p}{:}
+             \PY{n}{Z\PYZus{}out}\PY{p}{,} \PY{n}{memory\PYZus{}forward} \PY{o}{=} \PY{n}{full\PYZus{}layers\PYZus{}forward\PYZus{}prop}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{layers}\PY{p}{)}
+             \PY{n}{probs} \PY{o}{=} \PY{n}{softmax}\PY{p}{(}\PY{n}{Z\PYZus{}out}\PY{p}{)}
+             \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{probs}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    计算准确率
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{k}{def} \PY{n+nf}{get\PYZus{}acc}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{layers}\PY{p}{)}\PY{p}{:}
+             \PY{n}{Z\PYZus{}out}\PY{p}{,} \PY{n}{memory\PYZus{}forward} \PY{o}{=} \PY{n}{full\PYZus{}layers\PYZus{}forward\PYZus{}prop}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{layers}\PY{p}{)}
+             \PY{n}{probs} \PY{o}{=} \PY{n}{softmax}\PY{p}{(}\PY{n}{Z\PYZus{}out}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}     print(probs)}
+         \PY{c+c1}{\PYZsh{}     return np.argmax(probs, axis=1)}
+             \PY{n}{acc} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{Y\PYZus{}test}\PY{o}{==}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{probs}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+             \PY{k}{return} \PY{n}{acc}
+\end{Verbatim}
+
+
+    训练函数
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{k}{def} \PY{n+nf}{train}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{nn\PYZus{}architcture}\PY{p}{,} \PY{n}{epochs}\PY{p}{)}\PY{p}{:}
+             \PY{n}{layers} \PY{o}{=} \PY{n}{init\PYZus{}layers}\PY{p}{(}\PY{n}{nn\PYZus{}architcture}\PY{p}{)}
+             
+         \PY{c+c1}{\PYZsh{}     layers = dropout(2, layers, 2)}
+         \PY{c+c1}{\PYZsh{}     layers = dropout(1, layers, 5)}
+             \PY{n}{cost\PYZus{}history} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{accuracy\PYZus{}history} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{best\PYZus{}acc} \PY{o}{=} \PY{l+m+mi}{0}
+         
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{epochs}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{Z\PYZus{}out}\PY{p}{,} \PY{n}{memory\PYZus{}forward} \PY{o}{=} \PY{n}{full\PYZus{}layers\PYZus{}forward\PYZus{}prop}\PY{p}{(}\PY{n}{X}\PY{p}{,}\PY{n}{layers}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}         print(Z\PYZus{}out.shape)}
+                 \PY{n}{cost} \PY{o}{=} \PY{n}{loss}\PY{p}{(}\PY{n}{Z\PYZus{}out}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+                 \PY{n}{acc} \PY{o}{=} \PY{n}{get\PYZus{}acc}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{layers}\PY{p}{)}
+                 \PY{n}{cost\PYZus{}history}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{cost}\PY{p}{)}
+                 \PY{n}{accuracy\PYZus{}history}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{acc}\PY{p}{)}
+                 \PY{k}{if} \PY{n}{best\PYZus{}acc} \PY{o}{\PYZlt{}} \PY{n}{acc} \PY{p}{:}
+                     \PY{n}{best\PYZus{}acc} \PY{o}{=} \PY{n}{acc}
+                     
+                 \PY{k}{if} \PY{n}{i} \PY{o}{\PYZpc{}} \PY{l+m+mi}{500} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+         \PY{c+c1}{\PYZsh{}             epsilon = 0.01 * np.exp(\PYZhy{}i / 500) + 0.02}
+                     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{||epochs =\PYZgt{} }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{||cost =\PYZgt{} }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{cost}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{||acc =\PYZgt{} }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{acc}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}             print(\PYZsq{}epochs: \PYZsq{}, i, \PYZsq{}epsilon: \PYZsq{}, epsilon)}
+         \PY{c+c1}{\PYZsh{}             print(\PYZsq{}cost: \PYZsq{}, cost)}
+         \PY{c+c1}{\PYZsh{}             print(\PYZsq{}acc: \PYZsq{}, acc)}
+         
+         
+                 \PY{n}{memory\PYZus{}backward} \PY{o}{=} \PY{n}{full\PYZus{}layers\PYZus{}backward\PYZus{}prop}\PY{p}{(}\PY{n}{Z\PYZus{}out}\PY{p}{,} \PY{n}{memory\PYZus{}forward}\PY{p}{,} \PY{n}{layers}\PY{p}{,} \PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{)}
+                 \PY{n}{layers} \PY{o}{=} \PY{n}{update}\PY{p}{(}\PY{n}{layers}\PY{p}{,} \PY{n}{memory\PYZus{}backward}\PY{p}{)}
+                 
+                 \PY{n}{layers}\PY{o}{.}\PY{n}{reverse}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{memory\PYZus{}forward}\PY{o}{.}\PY{n}{reverse}\PY{p}{(}\PY{p}{)}
+             
+             \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{accuracy\PYZus{}history}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+             
+             
+             \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{cost\PYZus{}history}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}     plt.title(\PYZsq{}the net layers: \PYZsq{}, len(nn\PYZus{}architcture))}
+             
+             \PY{k}{return} \PY{n}{layers}\PY{p}{,} \PY{n}{cost\PYZus{}history}\PY{p}{,} \PY{n}{accuracy\PYZus{}history}
+\end{Verbatim}
+
+
+    初始化参数，网络结构，学习率
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{num\PYZus{}examples} \PY{o}{=} \PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{c+c1}{\PYZsh{} 训练样本的数量}
+         \PY{n}{nn\PYZus{}input\PYZus{}dim} \PY{o}{=} \PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{c+c1}{\PYZsh{} 输入层的维度}
+         \PY{n}{nn\PYZus{}output\PYZus{}dim} \PY{o}{=} \PY{l+m+mi}{4} \PY{c+c1}{\PYZsh{} 输出层的维度}
+         
+         \PY{c+c1}{\PYZsh{} 梯度下降的参数（我直接手动赋值）}
+         \PY{n}{epsilon} \PY{o}{=} \PY{l+m+mf}{0.08} \PY{c+c1}{\PYZsh{} 梯度下降的学习率}
+         \PY{n}{reg\PYZus{}lambda} \PY{o}{=} \PY{l+m+mf}{0.01} \PY{c+c1}{\PYZsh{} 正则化的强度}
+         \PY{n}{epochs} \PY{o}{=} \PY{l+m+mi}{5000}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{样本数量：}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{num\PYZus{}examples}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{输入样本维度：}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{nn\PYZus{}input\PYZus{}dim}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{输出数量：}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{nn\PYZus{}output\PYZus{}dim}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+样本数量： 2034
+输入样本维度： 256
+输出数量： 4
+
+    \end{Verbatim}
+
+    输出
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{c+c1}{\PYZsh{} nn\PYZus{}architcture = [}
+         \PY{c+c1}{\PYZsh{} \PYZsh{}     \PYZob{}\PYZsq{}input\PYZus{}dim\PYZsq{}: nn\PYZus{}input\PYZus{}dim, \PYZsq{}output\PYZus{}dim\PYZsq{}: 4, \PYZsq{}actFunc\PYZsq{}: \PYZsq{}tanh\PYZsq{}\PYZcb{},}
+         \PY{c+c1}{\PYZsh{} \PYZsh{}     \PYZob{}\PYZsq{}input\PYZus{}dim\PYZsq{}: 4, \PYZsq{}output\PYZus{}dim\PYZsq{}: 6, \PYZsq{}actFunc\PYZsq{}: \PYZsq{}tanh\PYZsq{}\PYZcb{},}
+         \PY{c+c1}{\PYZsh{} \PYZsh{}     \PYZob{}\PYZsq{}input\PYZus{}dim\PYZsq{}: 6, \PYZsq{}output\PYZus{}dim\PYZsq{}: 6, \PYZsq{}actFunc\PYZsq{}: \PYZsq{}tanh\PYZsq{}\PYZcb{},}
+         \PY{c+c1}{\PYZsh{} \PYZsh{}     \PYZob{}\PYZsq{}input\PYZus{}dim\PYZsq{}: 6, \PYZsq{}output\PYZus{}dim\PYZsq{}: 4, \PYZsq{}actFunc\PYZsq{}: \PYZsq{}tanh\PYZsq{}\PYZcb{},}
+         \PY{c+c1}{\PYZsh{}     \PYZob{}\PYZsq{}input\PYZus{}dim\PYZsq{}: nn\PYZus{}input\PYZus{}dim, \PYZsq{}output\PYZus{}dim\PYZsq{}: nn\PYZus{}output\PYZus{}dim, \PYZsq{}actFunc\PYZsq{}: \PYZsq{}tanh\PYZsq{}\PYZcb{},}
+         \PY{c+c1}{\PYZsh{} ]}
+         
+         \PY{c+c1}{\PYZsh{} layers, cost\PYZus{}history,accuracy\PYZus{}history = train(X\PYZus{}train, Y\PYZus{}train, nn\PYZus{}architcture, epochs)}
+         \PY{c+c1}{\PYZsh{} acc = get\PYZus{}acc(X\PYZus{}test, layers)}
+         \PY{c+c1}{\PYZsh{} \PYZsh{} plot\PYZus{}decision\PYZus{}boundary(lambda x: predict(x, layers))}
+         \PY{c+c1}{\PYZsh{} \PYZsh{} plt.title(\PYZdq{}Decision Boundary for hidden layer size 1.\PYZdq{})}
+         \PY{c+c1}{\PYZsh{} print(\PYZdq{}Decision Boundary for hidden layer size 1. acc: \PYZdq{}, acc)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{nn\PYZus{}architcture} \PY{o}{=} \PY{p}{[}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{nn\PYZus{}input\PYZus{}dim}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+         \PY{c+c1}{\PYZsh{}     \PYZob{}\PYZsq{}input\PYZus{}dim\PYZsq{}: 4, \PYZsq{}output\PYZus{}dim\PYZsq{}: 6, \PYZsq{}actFunc\PYZsq{}: \PYZsq{}tanh\PYZsq{}\PYZcb{},}
+         \PY{c+c1}{\PYZsh{}     \PYZob{}\PYZsq{}input\PYZus{}dim\PYZsq{}: 6, \PYZsq{}output\PYZus{}dim\PYZsq{}: 6, \PYZsq{}actFunc\PYZsq{}: \PYZsq{}tanh\PYZsq{}\PYZcb{},}
+         \PY{c+c1}{\PYZsh{}     \PYZob{}\PYZsq{}input\PYZus{}dim\PYZsq{}: 6, \PYZsq{}output\PYZus{}dim\PYZsq{}: 4, \PYZsq{}actFunc\PYZsq{}: \PYZsq{}tanh\PYZsq{}\PYZcb{},}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{nn\PYZus{}output\PYZus{}dim}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+         \PY{p}{]}
+         
+         \PY{n}{layers}\PY{p}{,} \PY{n}{cost\PYZus{}history}\PY{p}{,}\PY{n}{accuracy\PYZus{}history}  \PY{o}{=} \PY{n}{train}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{Y\PYZus{}train}\PY{p}{,} \PY{n}{nn\PYZus{}architcture}\PY{p}{,} \PY{n}{epochs}\PY{p}{)}
+         \PY{n}{acc} \PY{o}{=} \PY{n}{get\PYZus{}acc}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{layers}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} plot\PYZus{}decision\PYZus{}boundary(lambda x: predict(x, layers))}
+         \PY{c+c1}{\PYZsh{} plt.title(\PYZdq{}Decision Boundary for hidden layer size 2.\PYZdq{})}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Decision Boundary for hidden layer size 2, acc: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{acc}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+w: (256, 16)
+b: (1, 16)
+w: (16, 4)
+b: (1, 4)
+||epochs =>  0 ||cost =>  1.3918853653696637 ||acc =>  0.19068736141906872
+||epochs =>  500 ||cost =>  0.9798739672079001 ||acc =>  0.6917960088691796
+||epochs =>  1000 ||cost =>  0.7750803960214901 ||acc =>  0.7309682187730968
+||epochs =>  1500 ||cost =>  0.6977070394306649 ||acc =>  0.7361419068736141
+||epochs =>  2000 ||cost =>  0.6527972332094542 ||acc =>  0.7435328898743533
+||epochs =>  2500 ||cost =>  0.6212176983903607 ||acc =>  0.7487065779748706
+||epochs =>  3000 ||cost =>  0.5974369002969205 ||acc =>  0.7509238728750924
+||epochs =>  3500 ||cost =>  0.5791194116914139 ||acc =>  0.7479674796747967
+||epochs =>  4000 ||cost =>  0.5646819713838557 ||acc =>  0.7509238728750924
+||epochs =>  4500 ||cost =>  0.552969264475742 ||acc =>  0.7516629711751663
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_36_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_36_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Decision Boundary for hidden layer size 2, acc:  0.7516629711751663
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{nn\PYZus{}architcture} \PY{o}{=} \PY{p}{[}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{nn\PYZus{}input\PYZus{}dim}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+         \PY{c+c1}{\PYZsh{}     \PYZob{}\PYZsq{}input\PYZus{}dim\PYZsq{}: 20, \PYZsq{}output\PYZus{}dim\PYZsq{}: 20, \PYZsq{}actFunc\PYZsq{}: \PYZsq{}tanh\PYZsq{}\PYZcb{},}
+         \PY{c+c1}{\PYZsh{}     \PYZob{}\PYZsq{}input\PYZus{}dim\PYZsq{}: 20, \PYZsq{}output\PYZus{}dim\PYZsq{}: 8, \PYZsq{}actFunc\PYZsq{}: \PYZsq{}tanh\PYZsq{}\PYZcb{},}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{nn\PYZus{}output\PYZus{}dim}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+         \PY{p}{]}
+         
+         \PY{n}{layers}\PY{p}{,} \PY{n}{cost\PYZus{}history}\PY{p}{,}\PY{n}{accuracy\PYZus{}history}  \PY{o}{=} \PY{n}{train}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{Y\PYZus{}train}\PY{p}{,} \PY{n}{nn\PYZus{}architcture}\PY{p}{,} \PY{n}{epochs}\PY{p}{)}
+         \PY{n}{acc} \PY{o}{=} \PY{n}{get\PYZus{}acc}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{layers}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} plot\PYZus{}decision\PYZus{}boundary(lambda x: predict(x, layers))}
+         \PY{c+c1}{\PYZsh{} plt.title(\PYZdq{}Decision Boundary for hidden layer size 3\PYZdq{})}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Decision Boundary for hidden layer size 3. acc: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{acc}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+w: (256, 16)
+b: (1, 16)
+w: (16, 8)
+b: (1, 8)
+w: (8, 4)
+b: (1, 4)
+||epochs =>  0 ||cost =>  1.38045555357323 ||acc =>  0.2727272727272727
+||epochs =>  500 ||cost =>  0.7864093391366674 ||acc =>  0.7080561714708056
+||epochs =>  1000 ||cost =>  0.6557299250233662 ||acc =>  0.7250554323725056
+||epochs =>  1500 ||cost =>  0.5990797857910779 ||acc =>  0.7390983000739099
+||epochs =>  2000 ||cost =>  0.5577640814122116 ||acc =>  0.7464892830746489
+||epochs =>  2500 ||cost =>  0.5266459286659076 ||acc =>  0.7494456762749445
+||epochs =>  3000 ||cost =>  0.5047394707040654 ||acc =>  0.7487065779748706
+||epochs =>  3500 ||cost =>  0.48946968642160005 ||acc =>  0.7494456762749445
+||epochs =>  4000 ||cost =>  0.4778261657469351 ||acc =>  0.7509238728750924
+||epochs =>  4500 ||cost =>  0.468725599336684 ||acc =>  0.753880266075388
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_37_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_37_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Decision Boundary for hidden layer size 3. acc:  0.7568366592756837
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{nn\PYZus{}architcture} \PY{o}{=} \PY{p}{[}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{nn\PYZus{}input\PYZus{}dim}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+         \PY{c+c1}{\PYZsh{}     \PYZob{}\PYZsq{}input\PYZus{}dim\PYZsq{}: 16, \PYZsq{}output\PYZus{}dim\PYZsq{}: 16, \PYZsq{}actFunc\PYZsq{}: \PYZsq{}tanh\PYZsq{}\PYZcb{},}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{nn\PYZus{}output\PYZus{}dim}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+         \PY{p}{]}
+         
+         \PY{n}{layers}\PY{p}{,} \PY{n}{cost\PYZus{}history}\PY{p}{,}\PY{n}{accuracy\PYZus{}history}  \PY{o}{=} \PY{n}{train}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{Y\PYZus{}train}\PY{p}{,} \PY{n}{nn\PYZus{}architcture}\PY{p}{,} \PY{n}{epochs}\PY{p}{)}
+         \PY{n}{acc} \PY{o}{=} \PY{n}{get\PYZus{}acc}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{layers}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} plot\PYZus{}decision\PYZus{}boundary(lambda x: predict(x, layers))}
+         \PY{c+c1}{\PYZsh{} plt.title(\PYZdq{}Decision Boundary for hidden layer size 4\PYZdq{})}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Decision Boundary for hidden layer size 4. acc: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{acc}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+w: (256, 16)
+b: (1, 16)
+w: (16, 16)
+b: (1, 16)
+w: (16, 8)
+b: (1, 8)
+w: (8, 4)
+b: (1, 4)
+||epochs =>  0 ||cost =>  1.3887226093696021 ||acc =>  0.2719881744271988
+||epochs =>  500 ||cost =>  0.8124052803079899 ||acc =>  0.6807095343680709
+||epochs =>  1000 ||cost =>  0.6406990462245824 ||acc =>  0.6947524020694752
+||epochs =>  1500 ||cost =>  0.6014287137647395 ||acc =>  0.6932742054693274
+||epochs =>  2000 ||cost =>  0.5779894538892327 ||acc =>  0.6910569105691057
+||epochs =>  2500 ||cost =>  0.559587852901873 ||acc =>  0.6903178122690318
+||epochs =>  3000 ||cost =>  0.5269438523398914 ||acc =>  0.6873614190687362
+||epochs =>  3500 ||cost =>  0.5037784169474671 ||acc =>  0.688839615668884
+||epochs =>  4000 ||cost =>  0.4938692774141994 ||acc =>  0.6999260901699926
+||epochs =>  4500 ||cost =>  0.48436851209077847 ||acc =>  0.7154471544715447
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_38_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_38_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Decision Boundary for hidden layer size 4. acc:  0.7331855136733185
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{nn\PYZus{}architcture} \PY{o}{=} \PY{p}{[}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{nn\PYZus{}input\PYZus{}dim}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{16}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+             \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{nn\PYZus{}output\PYZus{}dim}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+         \PY{p}{]}
+         
+         \PY{n}{layers}\PY{p}{,} \PY{n}{cost\PYZus{}history}\PY{p}{,}\PY{n}{accuracy\PYZus{}history}  \PY{o}{=} \PY{n}{train}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{Y\PYZus{}train}\PY{p}{,} \PY{n}{nn\PYZus{}architcture}\PY{p}{,} \PY{n}{epochs}\PY{p}{)}
+         \PY{n}{acc} \PY{o}{=} \PY{n}{get\PYZus{}acc}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{layers}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{} plot\PYZus{}decision\PYZus{}boundary(lambda x: predict(x, layers))}
+         \PY{c+c1}{\PYZsh{} plt.title(\PYZdq{}Decision Boundary for hidden layer size 4\PYZdq{})}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Decision Boundary for hidden layer size 4. acc: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{acc}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+w: (256, 16)
+b: (1, 16)
+w: (16, 32)
+b: (1, 32)
+w: (32, 16)
+b: (1, 16)
+w: (16, 8)
+b: (1, 8)
+w: (8, 4)
+b: (1, 4)
+||epochs =>  0 ||cost =>  1.385431206007356 ||acc =>  0.2631189948263119
+||epochs =>  500 ||cost =>  0.6961613353977134 ||acc =>  0.6881005173688101
+||epochs =>  1000 ||cost =>  0.6114030269301304 ||acc =>  0.6977087952697709
+||epochs =>  1500 ||cost =>  0.5901563964551423 ||acc =>  0.6925351071692535
+||epochs =>  2000 ||cost =>  0.5857554592649714 ||acc =>  0.6925351071692535
+||epochs =>  2500 ||cost =>  0.5692344434577807 ||acc =>  0.6895787139689579
+||epochs =>  3000 ||cost =>  0.5412453654669249 ||acc =>  0.688839615668884
+||epochs =>  3500 ||cost =>  0.5561694586189349 ||acc =>  0.6932742054693274
+||epochs =>  4000 ||cost =>  0.5062316110039492 ||acc =>  0.6954915003695491
+||epochs =>  4500 ||cost =>  0.4974576889962514 ||acc =>  0.7065779748706578
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_39_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_39_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Decision Boundary for hidden layer size 4. acc:  0.7139689578713969
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{nn\PYZus{}architcture} \PY{o}{=} \PY{p}{[}
+            \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{nn\PYZus{}input\PYZus{}dim}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{90}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+            \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{90}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{80}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+            \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{80}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{70}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+            \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{70}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{60}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+            \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{60}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{50}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+            \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{50}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{25}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+            \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{25}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{15}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+            \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{15}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}dim}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{nn\PYZus{}output\PYZus{}dim}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{actFunc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tanh}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+        \PY{p}{]}
+        
+        \PY{n}{layers}\PY{p}{,} \PY{n}{cost\PYZus{}history}\PY{p}{,}\PY{n}{accuracy\PYZus{}history}  \PY{o}{=} \PY{n}{train}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{Y\PYZus{}train}\PY{p}{,} \PY{n}{nn\PYZus{}architcture}\PY{p}{,} \PY{n}{epochs}\PY{p}{)}
+        \PY{n}{acc} \PY{o}{=} \PY{n}{get\PYZus{}acc}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{layers}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} plot\PYZus{}decision\PYZus{}boundary(lambda x: predict(x, layers))}
+        \PY{c+c1}{\PYZsh{} plt.title(\PYZdq{}Decision Boundary for hidden layer size 4\PYZdq{})}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Decision Boundary for hidden layer size 8. acc: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{acc}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+w: (256, 90)
+b: (1, 90)
+w: (90, 80)
+b: (1, 80)
+w: (80, 70)
+b: (1, 70)
+w: (70, 60)
+b: (1, 60)
+w: (60, 50)
+b: (1, 50)
+w: (50, 25)
+b: (1, 25)
+w: (25, 15)
+b: (1, 15)
+w: (15, 4)
+b: (1, 4)
+||epochs =>  0 ||cost =>  1.3893044871659381 ||acc =>  0.2712490761271249
+||epochs =>  500 ||cost =>  0.6730076529132503 ||acc =>  0.6755358462675536
+||epochs =>  1000 ||cost =>  0.5924717521746753 ||acc =>  0.6962305986696231
+||epochs =>  1500 ||cost =>  0.5773339106233223 ||acc =>  0.6844050258684405
+||epochs =>  2000 ||cost =>  0.6155649718283415 ||acc =>  0.6910569105691057
+||epochs =>  2500 ||cost =>  0.5312132286082347 ||acc =>  0.7220990391722099
+||epochs =>  3000 ||cost =>  0.4477258798972525 ||acc =>  0.7324464153732446
+||epochs =>  3500 ||cost =>  0.49237893637438845 ||acc =>  0.7176644493717664
+||epochs =>  4000 ||cost =>  0.41227010518979057 ||acc =>  0.738359201773836
+||epochs =>  4500 ||cost =>  0.3992943101779021 ||acc =>  0.7368810051736882
+
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
