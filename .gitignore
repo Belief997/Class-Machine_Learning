@@ -2,3 +2,4 @@
 *.pyc
 *checkpoint.ipynb
 .env/*
+tiny_vid/
