@@ -27,3 +27,52 @@
 
   
 
+.
+├── LICENSE
+├── README.md
+├── assets
+│   ├── dog.png
+│   ├── giraffe.png
+│   ├── messi.png
+│   └── traffic.png
+├── config
+│   ├── coco.data
+│   ├── create_custom_model.sh
+│   ├── custom.data
+│   ├── yolov3-tiny.cfg
+│   └── yolov3.cfg
+├── data
+│   ├── coco.names
+│   ├── custom
+│   │   ├── classes.names
+│   │   ├── images
+│   │   │   └── train.jpg
+│   │   ├── labels
+│   │   │   └── train.txt
+│   │   ├── train.txt
+│   │   └── valid.txt
+│   ├── get_coco_dataset.sh
+│   └── samples
+│       ├── dog.jpg
+│       ├── eagle.jpg
+│       ├── field.jpg
+│       ├── giraffe.jpg
+│       ├── herd_of_horses.jpg
+│       ├── messi.jpg
+│       ├── person.jpg
+│       ├── room.jpg
+│       └── street.jpg
+├── detect.py
+├── models.py
+├── requirements.txt
+├── test.py
+├── train.py
+├── utils
+│   ├── __init__.py
+│   ├── augmentations.py
+│   ├── datasets.py
+│   ├── logger.py
+│   ├── parse_config.py
+│   └── utils.py
+└── weights
+    └── download_weights.sh
