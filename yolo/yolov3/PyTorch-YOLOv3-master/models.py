@@ -19,11 +19,13 @@ def create_modules(module_defs):
     """
     hyperparams = module_defs.pop(0)
     output_filters = [int(hyperparams["channels"])]
+    # 模型序列
     module_list = nn.ModuleList()
     for module_i, module_def in enumerate(module_defs):
+        # 子序列 代表一个子结构
         modules = nn.Sequential()
-
         if module_def["type"] == "convolutional":
+            # 卷积块 conv bn leaky
             bn = int(module_def["batch_normalize"])
             filters = int(module_def["filters"])
             kernel_size = int(module_def["size"])
@@ -45,6 +47,7 @@ def create_modules(module_defs):
                 modules.add_module(f"leaky_{module_i}", nn.LeakyReLU(0.1))
 
         elif module_def["type"] == "maxpool":
+            # 池化层 max pooling
             kernel_size = int(module_def["size"])
             stride = int(module_def["stride"])
             if kernel_size == 2 and stride == 1:
@@ -53,19 +56,23 @@ def create_modules(module_defs):
             modules.add_module(f"maxpool_{module_i}", maxpool)
 
         elif module_def["type"] == "upsample":
+            # 上采样
             upsample = Upsample(scale_factor=int(module_def["stride"]), mode="nearest")
             modules.add_module(f"upsample_{module_i}", upsample)
 
         elif module_def["type"] == "route":
+            # 空层
             layers = [int(x) for x in module_def["layers"].split(",")]
             filters = sum([output_filters[1:][i] for i in layers])
             modules.add_module(f"route_{module_i}", EmptyLayer())
 
         elif module_def["type"] == "shortcut":
+            # 空层
             filters = output_filters[1:][int(module_def["from"])]
             modules.add_module(f"shortcut_{module_i}", EmptyLayer())
 
         elif module_def["type"] == "yolo":
+            # 最后一个检测层
             anchor_idxs = [int(x) for x in module_def["mask"].split(",")]
             # Extract anchors
             anchors = [int(x) for x in module_def["anchors"].split(",")]
@@ -126,9 +133,11 @@ class YOLOLayer(nn.Module):
         FloatTensor = torch.cuda.FloatTensor if cuda else torch.FloatTensor
         self.stride = self.img_dim / self.grid_size
         # Calculate offsets for each grid
+        # 五个单元左上角坐标
         self.grid_x = torch.arange(g).repeat(g, 1).view([1, 1, g, g]).type(FloatTensor)
         self.grid_y = torch.arange(g).repeat(g, 1).t().view([1, 1, g, g]).type(FloatTensor)
         self.scaled_anchors = FloatTensor([(a_w / self.stride, a_h / self.stride) for a_w, a_h in self.anchors])
+        # 先验
         self.anchor_w = self.scaled_anchors[:, 0:1].view((1, self.num_anchors, 1, 1))
         self.anchor_h = self.scaled_anchors[:, 1:2].view((1, self.num_anchors, 1, 1))
 
@@ -146,15 +155,18 @@ class YOLOLayer(nn.Module):
         prediction = (
             x.view(num_samples, self.num_anchors, self.num_classes + 5, grid_size, grid_size)
             .permute(0, 1, 3, 4, 2)
-            .contiguous()
+            .contiguous()   # 维度转换，contiguous()相当于复制
         )
 
         # Get outputs
+        # 输出预测结果，说明的是x，y是预测的b-box中心点相对于网络单元格左上角的相对坐标
         x = torch.sigmoid(prediction[..., 0])  # Center x
         y = torch.sigmoid(prediction[..., 1])  # Center y
         w = prediction[..., 2]  # Width
         h = prediction[..., 3]  # Height
+        # bbox的置信度
         pred_conf = torch.sigmoid(prediction[..., 4])  # Conf
+        # 每个类的概率
         pred_cls = torch.sigmoid(prediction[..., 5:])  # Cls pred.
 
         # If grid size does not match current we compute new offsets
@@ -162,6 +174,7 @@ class YOLOLayer(nn.Module):
             self.compute_grid_offsets(grid_size, cuda=x.is_cuda)
 
         # Add offset and scale with anchors
+        # 计算出实际坐标
         pred_boxes = FloatTensor(prediction[..., :4].shape)
         pred_boxes[..., 0] = x.data + self.grid_x
         pred_boxes[..., 1] = y.data + self.grid_y
@@ -236,13 +249,17 @@ class Darknet(nn.Module):
 
     def __init__(self, config_path, img_size=416):
         super(Darknet, self).__init__()
+        # 模型中的参数定义，通过这个函数将配置文件中的块存储为列表形式
+        # 属性与值一一对应
         self.module_defs = parse_model_config(config_path)
+        # 创建模块
         self.hyperparams, self.module_list = create_modules(self.module_defs)
         self.yolo_layers = [layer[0] for layer in self.module_list if hasattr(layer[0], "metrics")]
         self.img_size = img_size
         self.seen = 0
         self.header_info = np.array([0, 0, 0, self.seen, 0], dtype=np.int32)
 
+    # 前向传播
     def forward(self, x, targets=None):
         img_dim = x.shape[2]
         loss = 0
@@ -251,8 +268,10 @@ class Darknet(nn.Module):
             if module_def["type"] in ["convolutional", "upsample", "maxpool"]:
                 x = module(x)
             elif module_def["type"] == "route":
+                # 拼接特征图（按通道拼接）
                 x = torch.cat([layer_outputs[int(layer_i)] for layer_i in module_def["layers"].split(",")], 1)
             elif module_def["type"] == "shortcut":
+                # 跳跃链接
                 layer_i = int(module_def["from"])
                 x = layer_outputs[-1] + layer_outputs[layer_i]
             elif module_def["type"] == "yolo":

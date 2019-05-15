@@ -74,6 +74,7 @@ if __name__ == "__main__":
         collate_fn=dataset.collate_fn,
     )
 
+    # 优化器
     optimizer = torch.optim.Adam(model.parameters())
 
     metrics = [
