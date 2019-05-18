@@ -59,7 +59,7 @@ def distance(X_test, X_train):
     # (X_test - X_train)*(X_test - X_train) = -2X_test*X_train + X_test*X_test + X_train*X_train
     #展开平方差公式，是不是这样就可以使用numpy的并行计算？
     #print(X_test.shape,X_train.shape)
-    
+
     dist1 = np.multiply(np.dot(X_test.T,X_train), -2)    # -2X_test*X_train, shape (num_test, num_train)
     dist2 = np.sum(np.square(X_test.T), axis=1, keepdims=True)    # X_test*X_test, shape (num_test, 1)
     dist3 = np.sum(np.square(X_train), axis=0,keepdims=True)    # X_train*X_train, shape(1, num_train)
@@ -68,7 +68,7 @@ def distance(X_test, X_train):
     return distances
 
 def predict(X_test, X_train, Y_train, k = [1]):
-    """ 
+    """
     输入:
     X_test -- 由numpy数组表示的测试集，大小为(图片长度 * 图片高度 * 3 , 测试样本数)
     X_train -- 由numpy数组表示的训练集，大小为(图片长度 * 图片高度 * 3 , 训练样本数)
