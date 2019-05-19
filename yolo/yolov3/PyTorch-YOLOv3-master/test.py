@@ -100,6 +100,6 @@ if __name__ == "__main__":
 
     print("Average Precisions:")
     for i, c in enumerate(ap_class):
-        print("+ Class '{c}' ({class_names[c]}) - AP: {AP[i]}")
+        print(f"+ Class '{c}' ({class_names[c]}) - AP: {AP[i]}")
 
-    print("mAP: {AP.mean()}")
+    print(f"mAP: {AP.mean()}")
