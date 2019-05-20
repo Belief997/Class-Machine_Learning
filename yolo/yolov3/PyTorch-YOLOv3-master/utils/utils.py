@@ -297,6 +297,8 @@ def build_targets(pred_boxes, pred_cls, target, anchors, ignore_thres):
     gx, gy = gxy.t()
     gw, gh = gwh.t()
     gi, gj = gxy.long().t() - 8
+    gj = gj if gj < obj_mask.shape[3] else obj_mask.shape[3] - 1
+    gi = gi if gi < obj_mask.shape[3] else obj_mask.shape[3] - 1
     # Set masks
     obj_mask[b, best_n, gj, gi] = 1
     noobj_mask[b, best_n, gj, gi] = 0

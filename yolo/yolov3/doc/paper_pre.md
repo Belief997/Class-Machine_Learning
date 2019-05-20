@@ -28,7 +28,7 @@ yolov3结构框图
    [shortcut] #跳过连接，与resnet类似，表示当前输出个前第三层输出与模块输入相加
    from=-3
    activation=linear
-   
+
    [yolo] #检测层，三个尺寸分别3个anchor，共九个anchor，mask有3个表示3个尺度，设置阈值和类别数
    mask = 6,7,8
    anchors = 10,13,  16,30,  33,23,  30,61,  62,45,  59,119,  116,90,  156,198,  373,326
@@ -38,10 +38,10 @@ yolov3结构框图
    ignore_thresh = .7
    truth_thresh = 1
    random=1
-   
+
    [route] #route可能有一个值，可能有两个值（-1,61）为-4时表示将输出前第四层的特征图，为-1和61时表示将输出前一层与第61层特征图的拼接结果
    layers = -4
-   
+
    [upsample] #上采样，三个尺度，步幅分别为32,16,8，通过上采样实现
    stride=2
    ```
